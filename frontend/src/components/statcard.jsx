@@ -36,8 +36,8 @@ function StatCard({
             </h1>
 
             <p className="trend">
-                ↑ 12.4% vs yesterday
-            </p>
+            Live Endpoint Data
+        </p>
 
             <div className="sparkline">
 
