@@ -96,11 +96,11 @@ function Dashboard() {
                 />
 
                 <StatCard
-                    title="Critical Threats"
-                    value="2"
-                    color="#FF9D00"
-                    data={criticalData}
-                />
+                title="Critical Threats"
+                value={stats.critical_threats}
+                color="#FF9D00"
+                data={criticalData}
+            />
 
                 <StatCard
                     title="Files Scanned"

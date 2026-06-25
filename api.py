@@ -20,6 +20,9 @@ from src.core.monitoring import (
 from src.utils.settings_manager import (
     load_settings
 )
+from src.services.dashboard_service import (
+    get_dashboard_stats
+)
 class MonitorRequest(BaseModel):
     path: str
 
@@ -44,12 +47,8 @@ def home():
 
 @app.get("/api/dashboard")
 def dashboard():
-    return {
-        "security_score": 98,
-        "threats_blocked": 23,
-        "files_scanned": 128342,
-        "active_monitors": 5
-    }
+
+    return get_dashboard_stats()
 @app.get("/api/monitor")
 def monitor():
 

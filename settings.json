@@ -1,7 +1,7 @@
 {
     "auto_scan": true,
     "real_time": true,
-    "heuristic": false,
+    "heuristic": true,
     "entropy": true,
     "auto_quarantine": true,
     "threat_alerts": true,
