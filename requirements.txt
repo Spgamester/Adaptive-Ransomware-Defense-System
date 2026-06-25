@@ -1,0 +1,6 @@
+watchdog
+psutil
+pandas
+scikit-learn
+numpy
+matplotlib
