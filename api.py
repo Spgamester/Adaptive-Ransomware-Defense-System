@@ -23,6 +23,11 @@ from src.utils.settings_manager import (
 from src.services.dashboard_service import (
     get_dashboard_stats
 )
+from src.services.telemetry_service import (
+    get_recent_alerts,
+    get_live_events,
+    get_timeline
+)
 class MonitorRequest(BaseModel):
     path: str
 
@@ -126,27 +131,8 @@ def update_settings(settings: dict):
 
 @app.get("/api/alerts")
 def alerts():
-    return [
-        {
-            "time": "11:59",
-            "severity": "Critical",
-            "alert": "Ransomware Behavior Detected",
-            "status": "Blocked"
-        },
-        {
-            "time": "09:56",
-            "severity": "High",
-            "alert": "Mass Encryption Attempt",
-            "status": "Contained"
-        },
-        {
-            "time": "09:40",
-            "severity": "Medium",
-            "alert": "Suspicious Process Activity",
-            "status": "Monitoring"
-        }
-    ]
 
+    return get_recent_alerts()
 @app.get("/api/threats")
 def threats():
     return [
@@ -265,14 +251,13 @@ def threat_intelligence():
         "score": 98
     }
 @app.get("/api/live-events")
-def get_live_events():
+def live_events_api():
 
-        return monitoring.live_events
+    return get_live_events()
 @app.get("/api/threat-timeline")
-def get_timeline():
+def timeline():
 
-    return monitoring.threat_timeline
-
+    return get_timeline()
 @app.get("/api/monitor-status")
 def monitor_status():
 

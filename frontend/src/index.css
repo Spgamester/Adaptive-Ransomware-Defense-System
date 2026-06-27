@@ -1701,3 +1701,19 @@ SAVE SECTION
   box-shadow: 0 0 18px rgba(0, 255, 255, .25);
 
 }
+.severity-badge,
+.status-badge {
+
+  display: inline-block;
+
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  text-align: center;
+
+}

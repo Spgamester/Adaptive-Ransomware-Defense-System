@@ -21,17 +21,36 @@ function Dashboard() {
 
     useEffect(() => {
 
-        fetch("http://127.0.0.1:8000/api/dashboard")
-            .then((res) => res.json())
-            .then((data) => {
-                setStats(data);
-            });
+        const loadDashboard = () => {
 
-        fetch("http://127.0.0.1:8000/api/alerts")
-            .then((res) => res.json())
-            .then((data) => {
-                setAlerts(data);
-            });
+            fetch("http://127.0.0.1:8000/api/dashboard")
+                .then(res => res.json())
+                .then(data => setStats(data));
+
+        };
+
+        loadDashboard();
+
+        const interval = setInterval(loadDashboard, 2000);
+
+        return () => clearInterval(interval);
+
+    }, []);
+    useEffect(() => {
+
+        const loadAlerts = () => {
+
+            fetch("http://127.0.0.1:8000/api/alerts")
+                .then(res => res.json())
+                .then(data => setAlerts(data));
+
+        };
+
+        loadAlerts();
+
+        const interval = setInterval(loadAlerts, 2000);
+
+        return () => clearInterval(interval);
 
     }, []);
 
@@ -142,31 +161,39 @@ function Dashboard() {
 
                     <tbody>
 
-                        {alerts.map((alert, index) => (
+                    {alerts.map((alert, index) => (
 
-                            <tr key={index}>
+                        <tr key={index}>
 
-                                <td>{alert.time}</td>
+                            <td>{alert.time}</td>
 
-                                <td>
-                                    <span className="critical-badge">
-                                        {alert.severity}
-                                    </span>
-                                </td>
+                            <td>
 
-                                <td>{alert.alert}</td>
+                                <span
+                                    className={`severity-badge ${(alert.severity || "").toLowerCase()}`}
+                                >
+                                {alert.severity || "Unknown"}
+                                </span>
 
-                                <td>
-                                    <span className="blocked-badge">
-                                        {alert.status}
-                                    </span>
-                                </td>
+                            </td>
 
-                            </tr>
+                            <td>{alert.event}</td>
 
-                        ))}
+                            <td>
 
-                    </tbody>
+                                <span
+                                    className={`status-badge ${(alert.status || "").toLowerCase()}`}
+                                >
+                                {alert.status || "Unknown"}
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    ))}
+
+                </tbody>
                 </table>
 
             </div>

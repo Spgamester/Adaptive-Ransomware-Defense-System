@@ -1,9 +1,9 @@
 {
-    "auto_scan": false,
-    "real_time": false,
+    "auto_scan": true,
+    "real_time": true,
     "heuristic": true,
-    "entropy": false,
-    "auto_quarantine": false,
+    "entropy": true,
+    "auto_quarantine": true,
     "threat_alerts": true,
     "launch_startup": false
 }
