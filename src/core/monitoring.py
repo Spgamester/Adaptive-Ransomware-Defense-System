@@ -10,6 +10,13 @@ from src.core.entropy import calculate_entropy
 from src.utils.logger import alert
 from src.utils.quarantine import quarantine_file
 
+from src.core.behavior_engine import (
+    add_signal,
+    get_recent_signals,
+    clear_old_signals
+)
+from src.core.telemetry_manager import TelemetryManager
+
 
 # ==========================================================
 # GLOBAL RUNTIME DATA
@@ -163,7 +170,17 @@ def log_suspicious(reason, file_path):
     monitor_stats["active_threats"] += 1
     monitor_stats["files_quarantined"] += 1
 
-    risk = evaluate_risk([reason])
+    # Store the new detection signal
+    add_signal(reason)
+
+    # Remove expired signals
+    clear_old_signals()
+
+    # Collect recent behavior
+    signals = get_recent_signals()
+
+    # Evaluate combined behavior
+    risk = evaluate_risk(signals)
 
     severity = "Low"
 
@@ -241,27 +258,43 @@ class RansomwareMonitor(FileSystemEventHandler):
 
             file_modifications.append(time.time())
 
-            live_events.insert(
+            # live_events.insert(
 
-                0,
+            #     0,
 
-                create_event(
+            #     create_event(
 
-                    source="File Monitor",
+            #         source="File Monitor",
 
-                    event="File Modified",
+            #         event="File Modified",
 
-                    severity="Low",
+            #         severity="Low",
 
-                    status="Monitoring",
+            #         status="Monitoring",
 
-                    category="Filesystem",
+            #         category="Filesystem",
 
-                    file_name=os.path.basename(file_path),
+            #         file_name=os.path.basename(file_path),
 
-                    file_path=file_path
+            #         file_path=file_path
 
-                )
+            #     )
+
+            # )
+
+            TelemetryManager.emit(
+
+                source="File Monitor",
+
+                signal="File Modified",
+
+                severity="Low",
+
+                category="Filesystem",
+
+                file_name=os.path.basename(file_path),
+
+                file_path=file_path
 
             )
 
