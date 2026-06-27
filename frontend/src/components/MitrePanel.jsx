@@ -1,46 +1,86 @@
+import { useEffect, useState } from "react";
+
 function MitrePanel() {
 
-    const tactics = [
-        ["Execution", 352],
-        ["Persistence", 214],
-        ["Privilege Escalation", 187],
-        ["Defense Evasion", 163],
-        ["Lateral Movement", 142]
-    ];
+    const [mitre, setMitre] = useState({
+
+        id: "-",
+
+        technique: "Loading...",
+
+        confidence: 0,
+
+        reason: ""
+
+    });
+
+    useEffect(() => {
+
+        const loadMitre = () => {
+
+            fetch("http://127.0.0.1:8000/api/mitre")
+                .then(res => res.json())
+                .then(data => {
+
+                    setMitre(data);
+
+                })
+                .catch(err => console.error(err));
+
+        };
+
+        loadMitre();
+
+        const interval = setInterval(loadMitre, 2000);
+
+        return () => clearInterval(interval);
+
+    }, []);
 
     return (
+
         <div className="mini-panel">
 
-            <h3>MITRE ATT&CK</h3>
+            <h3>MITRE ATT&CK Mapping</h3>
 
-            {tactics.map((item) => (
+            <div className="mitre-card">
 
-                <div
-                    className="mitre-row"
-                    key={item[0]}
-                >
+                <div className="mitre-id">
 
-                    <span>{item[0]}</span>
-
-                    <div className="bar-bg">
-
-                        <div
-                            className="bar-fill"
-                            style={{
-                                width: `${item[1] / 4}px`
-                            }}
-                        />
-
-                    </div>
-
-                    <span>{item[1]}</span>
+                    {mitre.id}
 
                 </div>
 
-            ))}
+                <div className="mitre-technique">
+
+                    {mitre.technique}
+
+                </div>
+
+                <div className="mitre-confidence">
+
+                    Confidence
+
+                    <strong>
+
+                        {mitre.confidence}%
+
+                    </strong>
+
+                </div>
+
+                <div className="mitre-reason">
+
+                    {mitre.reason}
+
+                </div>
+
+            </div>
 
         </div>
+
     );
+
 }
 
 export default MitrePanel;

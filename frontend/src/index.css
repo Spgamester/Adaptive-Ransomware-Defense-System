@@ -1717,3 +1717,64 @@ SAVE SECTION
   text-align: center;
 
 }
+.mitre-card {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  margin-top: 18px;
+
+}
+
+.mitre-id {
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  color: #FF3B3B;
+
+}
+
+.mitre-technique {
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  color: white;
+
+}
+
+.mitre-confidence {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #94A3B8;
+
+  font-size: 14px;
+
+}
+
+.mitre-confidence strong {
+
+  color: #00E676;
+
+  font-size: 18px;
+
+}
+
+.mitre-reason {
+
+  color: #CBD5E1;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}

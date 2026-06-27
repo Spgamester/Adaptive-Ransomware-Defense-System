@@ -1,6 +1,6 @@
 import os
 import time
-
+from src.core.risk_engine import evaluate_risk
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
@@ -149,6 +149,7 @@ def initialize_live_events():
 def log_suspicious(reason, file_path):
 
     alert(reason, file_path)
+    
 
     quarantine_result = quarantine_file(file_path)
 
@@ -162,23 +163,30 @@ def log_suspicious(reason, file_path):
     monitor_stats["active_threats"] += 1
     monitor_stats["files_quarantined"] += 1
 
-    severity = "Medium"
+    risk = evaluate_risk([reason])
 
-    if "Entropy" in reason:
-        severity = "High"
+    severity = "Low"
 
-    if "Mass" in reason:
+    if risk["risk_score"] >= 80:
+
         severity = "Critical"
 
+    elif risk["risk_score"] >= 60:
+
+        severity = "High"
+
+    elif risk["risk_score"] >= 30:
+
+        severity = "Medium"
     event = create_event(
 
-        source="Detection Engine",
+        source="Risk Engine",
 
         event=reason,
 
         severity=severity,
 
-        status="Blocked",
+        status=risk["decision"],
 
         category="Behavior",
 
@@ -190,6 +198,12 @@ def log_suspicious(reason, file_path):
 
     )
 
+    event["risk_score"] = risk["risk_score"]
+
+    event["confidence"] = risk["confidence"]
+
+    event["signals"] = risk["signals"]
+    
     live_events.insert(0, event)
 
     threat_timeline.insert(0, {

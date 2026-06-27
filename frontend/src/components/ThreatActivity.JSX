@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
     ResponsiveContainer,
     LineChart,
@@ -8,24 +10,61 @@ import {
     CartesianGrid
 } from "recharts";
 
-const data = [
-    { time: "00:00", malware: 120, encryption: 80, suspicious: 40 },
-    { time: "03:00", malware: 180, encryption: 120, suspicious: 90 },
-    { time: "06:00", malware: 240, encryption: 180, suspicious: 120 },
-    { time: "09:00", malware: 320, encryption: 250, suspicious: 170 },
-    { time: "12:00", malware: 410, encryption: 320, suspicious: 220 },
-    { time: "15:00", malware: 500, encryption: 390, suspicious: 270 },
-    { time: "18:00", malware: 620, encryption: 470, suspicious: 340 },
-    { time: "21:00", malware: 760, encryption: 540, suspicious: 410 }
-];
-
 function ThreatActivityChart() {
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+        const loadTimeline = () => {
+
+            fetch("http://127.0.0.1:8000/api/threat-timeline")
+                .then(res => res.json())
+                .then(events => {
+
+                    const counts = {};
+
+                    events.forEach(event => {
+
+                        const t = event.time;
+
+                        counts[t] = (counts[t] || 0) + 1;
+
+                    });
+
+                    const chartData = Object.keys(counts).map(time => ({
+
+                        time,
+
+                        threats: counts[time]
+
+                    }));
+
+                    setData(chartData);
+
+                });
+
+        };
+
+        loadTimeline();
+
+        const interval = setInterval(loadTimeline, 2000);
+
+        return () => clearInterval(interval);
+
+    }, []);
+
     return (
+
         <div className="chart-panel">
 
-            <h3>Threat Activity Over Time</h3>
+            <h3>Threat Activity</h3>
 
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer
+                width="100%"
+                height={350}
+            >
+
                 <LineChart data={data}>
 
                     <CartesianGrid stroke="#13233E" />
@@ -35,36 +74,27 @@ function ThreatActivityChart() {
                         stroke="#94A3B8"
                     />
 
-                    <YAxis stroke="#94A3B8" />
+                    <YAxis
+                        stroke="#94A3B8"
+                    />
 
                     <Tooltip />
 
                     <Line
                         type="monotone"
-                        dataKey="malware"
+                        dataKey="threats"
                         stroke="#FF3B3B"
                         strokeWidth={3}
                     />
 
-                    <Line
-                        type="monotone"
-                        dataKey="encryption"
-                        stroke="#FF9D00"
-                        strokeWidth={3}
-                    />
-
-                    <Line
-                        type="monotone"
-                        dataKey="suspicious"
-                        stroke="#00E5FF"
-                        strokeWidth={3}
-                    />
-
                 </LineChart>
+
             </ResponsiveContainer>
 
         </div>
+
     );
+
 }
 
 export default ThreatActivityChart;

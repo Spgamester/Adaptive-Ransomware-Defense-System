@@ -6,6 +6,12 @@ from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from src.services.dashboard_service import (
+    get_dashboard_data,
+    get_attack_vectors,
+    get_mitre_mapping
+)
+
 
 from src.utils.settings_manager import save_settings
 from src.core.scanner import run_scan
@@ -20,14 +26,12 @@ from src.core.monitoring import (
 from src.utils.settings_manager import (
     load_settings
 )
-from src.services.dashboard_service import (
-    get_dashboard_stats
-)
 from src.services.telemetry_service import (
     get_recent_alerts,
     get_live_events,
     get_timeline
 )
+
 class MonitorRequest(BaseModel):
     path: str
 
@@ -49,11 +53,10 @@ def home():
         "message": "ARDS Backend Running"
     }
 
-
 @app.get("/api/dashboard")
 def dashboard():
 
-    return get_dashboard_stats()
+    return get_dashboard_data()
 @app.get("/api/monitor")
 def monitor():
 
@@ -255,9 +258,11 @@ def live_events_api():
 
     return get_live_events()
 @app.get("/api/threat-timeline")
-def timeline():
+def get_threat_timeline():
 
-    return get_timeline()
+    from src.core.monitoring import threat_timeline
+
+    return threat_timeline
 @app.get("/api/monitor-status")
 def monitor_status():
 
@@ -281,3 +286,11 @@ def stop_monitor():
     return {
         "message": "Monitoring Stopped"
     }
+@app.get("/api/attack-vectors")
+def attack_vectors():
+
+    return get_attack_vectors()
+@app.get("/api/mitre")
+def mitre():
+
+    return get_mitre_mapping()

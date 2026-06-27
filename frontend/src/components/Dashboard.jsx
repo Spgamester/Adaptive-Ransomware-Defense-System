@@ -101,7 +101,7 @@ function Dashboard() {
                 <SecurityScore score={stats.security_score} />
 
                 <StatCard
-                    title="Active Monitors"
+                    title="Active Processes"
                     value={stats.active_monitors}
                     color="#FF3B3B"
                     data={threatData}
