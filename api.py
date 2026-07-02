@@ -3,6 +3,7 @@ import src.core.monitoring as monitoring
 from src.utils.restore import restore_file
 from src.utils.delete_file import delete_quarantined_file
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from src.shared.runtime import scan_progress
 from fastapi.middleware.cors import CORSMiddleware
@@ -35,20 +36,26 @@ from src.services.telemetry_service import (
     get_timeline
 )
 
+app = FastAPI()
+
 class MonitorRequest(BaseModel):
     path: str
 
-app = FastAPI(title="ARDS API")
-scan_history = []
 
-# Allow React frontend
+origins = [
+    "http://localhost:5173",
+    "https://adaptive-ransomware-defense-system.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+scan_history = []
 
 @app.get("/")
 def home():
