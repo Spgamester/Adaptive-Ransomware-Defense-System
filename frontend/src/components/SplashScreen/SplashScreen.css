@@ -1,0 +1,284 @@
+/* ===========================
+   ARDS SPLASH SCREEN
+=========================== */
+
+.splash-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100vh;
+
+    background: #050B18;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 999999;
+
+    overflow: hidden;
+
+    transition: opacity 1s ease;
+
+}
+
+.fade-out {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+/* ===========================
+   VIDEO
+=========================== */
+
+.startup-video {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    background: black;
+
+}
+
+/* ===========================
+   BOOT SCREEN
+=========================== */
+
+.boot-screen {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background: #081224;
+
+    animation: bootFade .8s ease;
+
+}
+
+/* ===========================
+   LOGO
+=========================== */
+
+.boot-logo {
+
+    width: 320px;
+
+    max-width: 70%;
+
+    height: auto;
+
+    margin-bottom: 35px;
+
+    animation: logoFloat 3s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 25px rgba(0, 229, 255, .8)) drop-shadow(0 0 50px rgba(0, 229, 255, .45));
+
+}
+
+@keyframes logoFloat {
+
+    0% {
+
+        transform: translateY(0);
+
+    }
+
+    50% {
+
+        transform: translateY(-8px);
+
+    }
+
+    100% {
+
+        transform: translateY(0);
+
+    }
+
+}
+
+/* ===========================
+   TITLES
+=========================== */
+
+.boot-screen h1 {
+
+    color: white;
+
+    font-size: 44px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    text-shadow:
+
+        0 0 15px rgba(0, 229, 255, .5);
+
+}
+
+.boot-screen h3 {
+
+    font-size: 22px;
+
+    color: #7CCBFF;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 45px;
+
+}
+
+/* ===========================
+   LOADING PANEL
+=========================== */
+
+.loading-box {
+
+    width: 850px;
+
+    max-width: 90%;
+
+    padding: 35px;
+
+    border-radius: 20px;
+
+}
+
+.loading-box div {
+
+    padding: 8px 0;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    transition: .35s;
+
+}
+
+.loaded {
+
+    color: #00E5FF;
+
+    font-weight: 600;
+
+}
+
+.pending {
+
+    color: #6E8198;
+
+}
+
+/* ===========================
+   PROGRESS
+=========================== */
+
+.progress-container {
+
+    width: 850px;
+
+    max-width: 90%;
+
+    height: 14px;
+
+}
+
+.progress-fill {
+
+    height: 100%;
+
+    width: 0;
+
+    border-radius: 50px;
+
+    background: linear-gradient(90deg,
+
+            #00E5FF,
+
+            #00D26A);
+
+    transition: width .08s linear;
+
+    box-shadow:
+
+        0 0 20px #00E5FF;
+
+}
+
+.progress-text {
+
+    color: white;
+
+    margin-top: 16px;
+
+    font-size: 20px;
+
+    letter-spacing: 2px;
+
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes bootFade {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
+
+}
+
+.sidebar-logo {
+
+    width: 64px;
+
+    height: 64px;
+
+    object-fit: contain;
+
+    filter:
+
+        drop-shadow(0 0 20px rgba(0, 229, 255, .8));
+
+}

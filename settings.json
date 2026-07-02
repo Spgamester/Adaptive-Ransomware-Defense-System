@@ -1,0 +1,14 @@
+{
+    "auto_scan": true,
+    "real_time": true,
+    "auto_quarantine": true,
+    "launch_startup": false,
+    "ml_detection": true,
+    "heuristic": true,
+    "entropy": true,
+    "behavior_monitoring": true,
+    "threat_alerts": true,
+    "email_alerts": false,
+    "desktop_notifications": true,
+    "quarantine_notifications": true
+}

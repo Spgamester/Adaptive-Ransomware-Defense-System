@@ -1,0 +1,103 @@
+
+.git_old/
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environments
+.venv/
+.venv-1/
+venv/
+env/
+
+# ===============================
+# Node
+# ===============================
+node_modules/
+dist/
+build/
+
+# ===============================
+# IDE
+# ===============================
+.vscode/
+.idea/
+*.swp
+
+# ===============================
+# Logs
+# ===============================
+logs/*
+!logs/.gitkeep
+
+*.log
+
+# ===============================
+# Runtime Data
+# ===============================
+quarantine/*
+!quarantine/.gitkeep
+
+restored_files/*
+!restored_files/.gitkeep
+
+# ===============================
+# ML Datasets
+# ===============================
+ARDS_AI/datasets/
+*.csv
+*.parquet
+
+# Keep trained models
+!models/*.pkl
+!models/*.json
+
+# ===============================
+# Cache
+# ===============================
+.pytest_cache/
+.mypy_cache/
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Temporary Files
+# ===============================
+project_tree.txt
+clean_project_tree.txt
+project_structure.txt
+project_source_files.txt
+python_files.txt
+
+# Environment
+frontend/.env
+
+# Runtime
+logs/*.txt
+quarantine/*
+!quarantine/.gitkeep
+
+restored_files/*
+!restored_files/.gitkeep
+
+# AI datasets
+ARDS_AI/datasets/
+ARDS_AI/notebooks/
+ARDS_AI/experiments/
+ARDS_AI/models/
+ARDS_AI/pipeline/stage5_training/results/
+ARDS_AI/pipeline/stage5_training/production/
+ARDS_AI/pipeline/stage5_training/catboost_info/
+
+# Reports generated during training
+reports/*.csv
+reports/*.json
